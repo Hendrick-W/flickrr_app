@@ -12,9 +12,11 @@ import {
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Provider } from 'react-redux';
 
 import DetailPage from './src/DetailPage'
 import HomePage from './src/HomePage'
+import store from './src/store';
 
 const Stack = createStackNavigator()
 
@@ -41,4 +43,10 @@ const App: () => React$Node = () => {
   );
 };
 
-export default App;
+export default () => {
+  return (
+    <Provider store = {store}>
+      <App/>
+    </Provider>
+  )
+}

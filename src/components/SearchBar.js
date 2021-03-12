@@ -1,23 +1,55 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { TextInput, View, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import Icon from 'react-native-vector-icons/AntDesign';
+import IconFeather from 'react-native-vector-icons/Feather';
+import IconMI from 'react-native-vector-icons/MaterialIcons';
+import {searchAction} from '../actions/searchAction';
 
 const SearchBar = ({
-  value, onChange, params, onSubmit
+  value, onChange, onDelete, mode, changeMode
 }) => {
+  const dispatch = useDispatch();
+
   return (
+    <>
     <View style={{flexDirection:'row', alignItems:'center', margin:10}}>
       <TextInput style={styles.textInput}
         autoCapitalize="none"
         autoCorrect={false}
         value={value}
+        placeholder={'Add tag(s)...'}
         onChangeText={onChange}
       />
-      <TouchableOpacity style={styles.button}
-        onPress={()=> onSubmit(value)}
+      {value.trim().length > 0 && 
+      <TouchableOpacity style={{position:'absolute', right: 100}}
+        onPress={()=> onDelete()}
       >
-        <Text style={styles.text}>Search</Text>
+        <IconFeather name="x" size={24} color="#000"/>
+      </TouchableOpacity>
+      }
+      
+      <TouchableOpacity style={styles.button}
+        onPress={()=> dispatch(searchAction({tags:value, tagmode:'all'}))}
+      >
+          <Icon name="search1" size={30} color="#fff" />
       </TouchableOpacity>
     </View>
+    <View style={{flexDirection:'row', justifyContent:'space-around', alignItems:'center'}}>
+      <TouchableOpacity style={{flexDirection:'row'}}
+        onPress={()=>changeMode('all')}
+      >
+        <IconMI name={mode == 'all' ? "radio-button-checked" : "radio-button-unchecked"} size={20}/>
+        <Text>Include all tags</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={{flexDirection:'row'}}
+        onPress={()=>changeMode('any')}
+      >
+        <IconMI name={mode == 'any' ? "radio-button-checked" : "radio-button-unchecked"} size={20}/>
+        <Text>Include any tag</Text> 
+      </TouchableOpacity>
+    </View>
+    </>
 )};
 
 const styles=StyleSheet.create({
@@ -25,7 +57,8 @@ const styles=StyleSheet.create({
     flex:3,
     borderWidth:1,
     padding:10,
-    minHeight: "10%"
+    minHeight: "10%",
+    paddingRight: 50,
   },
   button:{
     flex:1,

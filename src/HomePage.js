@@ -1,20 +1,29 @@
 import React, {useState, useEffect} from 'react';
 import { Text, View, StyleSheet, Button, KeyboardAvoidingView, Platform} from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 
 import SearchBar from './components/SearchBar';
-import SearchResult from './components/SearchResult'
+import SearchResult from './components/SearchResult';
+import {searchAction} from './actions/searchAction';
 
 const HomePage = ({
   navigation,
 }) => {
-  const [searchText, setSearchText] = useState('');
-  const [resultPict, setResultPict] = useState('');
+  const {loading, result} = useSelector(state => state.search);
+  const dispatch = useDispatch();
+  const [searchText, setSearchText] = useState('')
+  const [mode, setMode] = useState('all')
 
-  const handleTextChange = (value) => {
-    setSearchText(value)
+  const handleSearchText = (value) => {
+    setSearchText(value);
+  } 
+
+  const handleMode = (value) => {
+    setMode(value)
   }
-  const handleSubmitSearch = (pict) => {
-    setResultPict(pict)
+
+  const handleDelete = () => {
+    setSearchText('');
   }
 
   return (
@@ -25,17 +34,20 @@ const HomePage = ({
       <View style={styles.searchBar}>
         <SearchBar
           value={searchText}
-          onChange={handleTextChange}
-          onSubmit={handleSubmitSearch}
+          onChange={handleSearchText}
+          onDelete={handleDelete}
+          mode={mode}
+          changeMode={handleMode}
         />
       </View>
       <View style={styles.searchResult}>
         <SearchResult
-          value={resultPict}
         />
       </View>
       <View>
-        <Button title="Refresh"/>
+        <Button title="Refresh"
+          onPress={()=>{dispatch(searchAction({tags:`${searchText}`, tagmode:`${mode}`}))}}
+        />
       </View>
     </KeyboardAvoidingView>
 )};
@@ -44,7 +56,7 @@ const styles = StyleSheet.create({
   container: {flex:1, backgroundColor:'#fff'},
   searchBar: {
     flex : 1,
-    minHeight: "4%"
+    minHeight: "6%"
   },
   searchResult:{
     flex: 10,
