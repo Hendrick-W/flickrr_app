@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import { Text, View, StyleSheet, Button, KeyboardAvoidingView, Platform} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -13,6 +13,7 @@ const HomePage = ({
   const dispatch = useDispatch();
   const [searchText, setSearchText] = useState('')
   const [mode, setMode] = useState('all')
+  const [showHeader, setShowHeader] = useState(true)
 
   const handleSearchText = (value) => {
     setSearchText(value);
@@ -26,11 +27,19 @@ const HomePage = ({
     setSearchText('');
   }
 
+  const handleShowHeader = (value) => {
+    setShowHeader(value)
+  }
+  useEffect(() => {
+    setShowHeader(true)
+  }, [result]);
+
   return (
     <KeyboardAvoidingView style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 40 : -500}
     > 
+    {showHeader && 
       <View style={styles.searchBar}>
         <SearchBar
           value={searchText}
@@ -40,8 +49,10 @@ const HomePage = ({
           changeMode={handleMode}
         />
       </View>
+    }
       <View style={styles.searchResult}>
         <SearchResult
+          onChangeOffset = {handleShowHeader}
         />
       </View>
       <View>
@@ -53,7 +64,7 @@ const HomePage = ({
 )};
 
 const styles = StyleSheet.create({
-  container: {flex:1, backgroundColor:'#fff'},
+  container: {flex:1, backgroundColor:'#000'},
   searchBar: {
     flex : 1,
     minHeight: "6%"

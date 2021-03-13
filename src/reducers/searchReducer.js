@@ -3,17 +3,18 @@ import * as types from '../constant/actionType';
 const initialState = {
   loading:false,
   result: [],
+  title:"",
   error:null
 }
 
 export default searchReducer = (state = initialState, action) => {
   switch(action.type){
     case types.SEARCH_REQUEST:
-      return {loading:true, result:[]};
+      return {loading:true, result:[], title:"", error:null};
     case types.SEARCH_SUCCESS:
-      return {loading:false, result: action.payload};
+      return {...state, loading:false, result: action.payload.result, title: action.payload.title};
     case types.SEARCH_FAILURE:
-      return {loading:false, result: [], error: action.payload};
+      return {...state, loading:false, result: [], error: action.payload};
     default:
       return state;
   }
