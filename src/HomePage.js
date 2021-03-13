@@ -55,11 +55,13 @@ const HomePage = ({
           onChangeOffset = {handleShowHeader}
         />
       </View>
+      {showHeader &&
       <View>
         <Button title="Refresh"
           onPress={()=>{dispatch(searchAction({tags:`${searchText}`, tagmode:`${mode}`}))}}
         />
       </View>
+      }
     </KeyboardAvoidingView>
 )};
 

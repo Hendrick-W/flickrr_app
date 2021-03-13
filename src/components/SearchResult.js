@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, FlatList, StyleSheet, Image, Dimensions} from 'react-native';
+import { Text, View, FlatList, TouchableOpacity} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-
 import {searchAction} from '../actions/searchAction';
-import Picture from './Picture'
+
+import Picture from './Picture';
+import AuthorAndFavourite from './AuthorAndFavourite';
 
 const SearchResult = ({
-    params, onChangeOffset
+  onChangeOffset
 }) => {
-  const {loading, result, title} = useSelector(state => state.search);
+  const {result} = useSelector(state => state.search);
+  const {favourite} = useSelector(state =>state.favourite)
   const [offsetY, setOffsetY] = useState(0)
   const dispatch = useDispatch();
-  const [aspectRatio, setAspectRatio] = useState(0)
   useEffect(()=>{
     dispatch(searchAction({tags:"", tagmode:'all'}))
   }, [])
@@ -23,8 +24,22 @@ const SearchResult = ({
         onScrollEndDrag={(event)=>{offsetY<event.nativeEvent.contentOffset.y?onChangeOffset(false):onChangeOffset(true)}}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item})=>{
+          const author_name = item.author.match(/"(.*?)"/)[1]
           return (
-            <Picture imageUrl={item.media.m} author={item.author} title={item.title}/>
+            <View style={{backgroundColor:'#fff', marginBottom: 30}}>
+              <Picture 
+                imageUrl={item.media.m}
+                imagelink={item.link}
+              />
+              <AuthorAndFavourite
+                imageUrl={item.media.m}
+                imagelink={item.link}
+                author_name={author_name}
+                author_id={item.author_id}
+                title={item.title}
+              />
+              <Text style={{alignSelf:'center', fontSize: 20, textAlign:'center', fontWeight:'bold'}}>{item.title}</Text>
+            </View>
           )
         }}
       />

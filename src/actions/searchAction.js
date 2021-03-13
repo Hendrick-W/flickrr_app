@@ -21,6 +21,7 @@ export const searchAction = (params) => {
       dispatch(searchRequest())
       const tags = params.tags.replace(/\s/g, ',')
       const response = await axios.get(`http://api.flickr.com/services/feeds/photos_public.gne?format=json&jsoncallback=?&tags=${tags}&tagmode=${params.mode}`)
+      
       const data = response.data.substring(1, response.data.length - 1);
       const parse_data = JSON.parse(data)
       dispatch(searchSuccess({result: parse_data.items, title: parse_data.title}))
