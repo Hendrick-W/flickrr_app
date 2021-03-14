@@ -3,8 +3,8 @@ import favouriteReducers from './favouriteReducers';
 import searchReducer from './searchReducer';
 
 const rootReducer = combineReducers({
-  search:searchReducer,
-  favourite: favouriteReducers
-})
+  search: searchReducer,
+  favourite: favouriteReducers,
+});
 
-export default rootReducer
+export default rootReducer;
