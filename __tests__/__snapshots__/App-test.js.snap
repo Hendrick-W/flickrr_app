@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`snpapshot 1`] = `
+exports[`snapshot 1`] = `
 <View
   style={
     Object {
@@ -396,6 +396,7 @@ exports[`snpapshot 1`] = `
                                           "paddingRight": 50,
                                         }
                                       }
+                                      testID="searchTags"
                                       underlineColorAndroid="transparent"
                                       value=""
                                     />
@@ -419,6 +420,7 @@ exports[`snpapshot 1`] = `
                                           "opacity": 1,
                                         }
                                       }
+                                      testID="searchButton"
                                     >
                                       <Text
                                         allowFontScaling={false}

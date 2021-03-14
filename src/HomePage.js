@@ -83,5 +83,4 @@ const styles = StyleSheet.create({
     flex: 10,
   },
 });
-
 export default HomePage;

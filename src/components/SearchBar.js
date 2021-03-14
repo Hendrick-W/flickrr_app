@@ -30,6 +30,7 @@ const SearchBar = ({value, onChange, onDelete, mode, changeMode}) => {
           overflow: 'hidden',
         }}>
         <TextInput
+          testID="searchTags"
           style={styles.textInput}
           autoCapitalize="none"
           autoCorrect={false}
@@ -48,6 +49,7 @@ const SearchBar = ({value, onChange, onDelete, mode, changeMode}) => {
           </TouchableOpacity>
         )}
         <TouchableOpacity
+          testID="searchButton"
           style={styles.button}
           onPress={() => dispatch(searchAction({tags: value, mode: mode}))}>
           <Icon name="search1" size={28} color="#fff" />

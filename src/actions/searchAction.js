@@ -32,7 +32,7 @@ export const searchAction = (params) => {
       );
     } catch (error) {
       console.log('ini error', error);
-      dispatch(searchError(error));
+      dispatch(searchError('Failed to load data'));
     }
   };
 };
