@@ -32,6 +32,9 @@
     "@babel/core": "^7.13.10",
     "@babel/runtime": "^7.13.10",
     "@react-native-community/eslint-config": "^2.0.0",
+    "@testing-library/jest-native": "^4.0.1",
+    "@testing-library/react-native": "^7.2.0",
+    "@types/jest": "^26.0.20",
     "babel-jest": "^26.6.3",
     "eslint": "^7.21.0",
     "jest": "^26.6.3",
@@ -40,6 +43,24 @@
     "redux-mock-store": "^1.5.4"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-native/extend-expect"
+    ],
+    "transformIgnorePatterns": [
+      "/node_modules/(?!native-base)/"
+    ],
+    "setupFiles": [
+      "<rootDir>/src/mockSetup/jestSetup.js",
+      "./node_modules/react-native-gesture-handler/jestSetup.js"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   }
 }
